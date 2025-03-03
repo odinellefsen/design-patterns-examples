@@ -1,22 +1,24 @@
-// Observer interface - defines the update method that all concrete observers must implement
+// this is a pull based observer pattern. this means that the observer is responsible for pulling the data from the subject.
+// if you used a push based observer pattern, the subject would push the data to the observer via the update method.
+// Observer interface - now with no parameters for update
 interface Observer {
-    void update(float temperature, float humidity, float pressure);
+    void update();
 }
 
-// Subject interface - defines methods for registering, removing, and notifying observers
+// Subject interface remains the same
 interface Subject {
     void registerObserver(Observer o);
     void removeObserver(Observer o);
     void notifyObservers();
 }
 
-// DisplayElement interface - defines a display method that all display elements must implement
+// DisplayElement interface remains the same
 interface DisplayElement {
     void display();
 }
 
-// ConcreteSubject - implements the Subject interface and maintains the state
-// that is of interest to observers
+// ConcreteSubject - implements the Subject interface and maintains the state.
+// Note: Getter methods are added for observers to pull data.
 class WeatherStation implements Subject {
     private float temperature;
     private float humidity;
@@ -24,7 +26,7 @@ class WeatherStation implements Subject {
     private java.util.ArrayList<Observer> observers;
     
     public WeatherStation() {
-        observers = new java.util.ArrayList<Observer>();
+        observers = new java.util.ArrayList<>();
     }
     
     @Override
@@ -34,16 +36,13 @@ class WeatherStation implements Subject {
     
     @Override
     public void removeObserver(Observer o) {
-        int i = observers.indexOf(o);
-        if (i >= 0) {
-            observers.remove(i);
-        }
+        observers.remove(o);
     }
     
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update(temperature, humidity, pressure);
+            observer.update();
         }
     }
     
@@ -59,18 +58,39 @@ class WeatherStation implements Subject {
         this.pressure = pressure;
         measurementsChanged();
     }
+    
+    // Getter methods for observers to pull state data
+    public float getTemperature() {
+        return temperature;
+    }
+    
+    public float getHumidity() {
+        return humidity;
+    }
+    
+    public float getPressure() {
+        return pressure;
+    }
 }
 
-// ConcreteObserver 1 - implements the Observer interface to receive updates
-// and DisplayElement to display its state
+// ConcreteObserver 1 - holds a reference to the ConcreteSubject (WeatherStation)
+// and pulls data when updated
 class CurrentConditionsDisplay implements Observer, DisplayElement {
     private float temperature;
     private float humidity;
+    private WeatherStation weatherStation;
+    
+    // Constructor accepts the subject and registers this observer
+    public CurrentConditionsDisplay(WeatherStation weatherStation) {
+        this.weatherStation = weatherStation;
+        weatherStation.registerObserver(this);
+    }
     
     @Override
-    public void update(float temperature, float humidity, float pressure) {
-        this.temperature = temperature;
-        this.humidity = humidity;
+    public void update() {
+        // Pull the latest state from the subject
+        this.temperature = weatherStation.getTemperature();
+        this.humidity = weatherStation.getHumidity();
         display();
     }
     
@@ -80,75 +100,14 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
     }
 }
 
-// ConcreteObserver 2 - another implementation of Observer and DisplayElement
-class StatisticsDisplay implements Observer, DisplayElement {
-    private float maxTemp = 0.0f;
-    private float minTemp = 200;
-    private float tempSum = 0.0f;
-    private int numReadings = 0;
-    
-    @Override
-    public void update(float temperature, float humidity, float pressure) {
-        tempSum += temperature;
-        numReadings++;
-        
-        if (temperature > maxTemp) {
-            maxTemp = temperature;
-        }
-        
-        if (temperature < minTemp) {
-            minTemp = temperature;
-        }
-        
-        display();
-    }
-    
-    @Override
-    public void display() {
-        System.out.println("Avg/Max/Min temperature = " + (tempSum / numReadings) + "/" + maxTemp + "/" + minTemp);
-    }
-}
-
-// ConcreteObserver 3 - another implementation of Observer and DisplayElement
-class ForecastDisplay implements Observer, DisplayElement {
-    private float currentPressure = 29.92f;
-    private float lastPressure;
-    
-    @Override
-    public void update(float temperature, float humidity, float pressure) {
-        lastPressure = currentPressure;
-        currentPressure = pressure;
-        display();
-    }
-    
-    @Override
-    public void display() {
-        System.out.print("Forecast: ");
-        if (currentPressure > lastPressure) {
-            System.out.println("Improving weather on the way!");
-        } else if (currentPressure == lastPressure) {
-            System.out.println("More of the same");
-        } else if (currentPressure < lastPressure) {
-            System.out.println("Watch out for cooler, rainy weather");
-        }
-    }
-}
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class ObserverPattern {
     public static void main(String[] args) {
         // Create subject
         WeatherStation weatherStation = new WeatherStation();
         
-        // Create observers
-        CurrentConditionsDisplay currentDisplay = new CurrentConditionsDisplay();
-        StatisticsDisplay statisticsDisplay = new StatisticsDisplay();
-        ForecastDisplay forecastDisplay = new ForecastDisplay();
-        
-        // Register observers with the subject
-        weatherStation.registerObserver(currentDisplay);
-        weatherStation.registerObserver(statisticsDisplay);
-        weatherStation.registerObserver(forecastDisplay);
+        // Create and register observers
+        CurrentConditionsDisplay currentDisplay = new CurrentConditionsDisplay(weatherStation);
         
         // Simulate weather changes
         System.out.println("Weather update 1:");
@@ -156,11 +115,5 @@ public class ObserverPattern {
         
         System.out.println("\nWeather update 2:");
         weatherStation.setMeasurements(82, 70, 29.2f);
-        
-        // Remove an observer
-        weatherStation.removeObserver(forecastDisplay);
-        
-        System.out.println("\nWeather update 3 (after removing forecast display):");
-        weatherStation.setMeasurements(78, 90, 29.2f);
     }
 }
