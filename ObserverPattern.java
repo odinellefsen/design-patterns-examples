@@ -100,6 +100,35 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
     }
 }
 
+// ConcreteObserver 2 - holds a reference to the ConcreteSubject (WeatherStation)
+// and pulls data when updated
+@SuppressWarnings("unused")
+class StatisticsDisplay implements Observer, DisplayElement {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private WeatherStation weatherStation;
+    
+    // Constructor accepts the subject and registers this observer
+    public StatisticsDisplay(WeatherStation weatherStation) {
+        this.weatherStation = weatherStation;
+        weatherStation.registerObserver(this);
+    }
+
+    @Override
+    public void update() {
+        this.temperature = weatherStation.getTemperature();
+        this.humidity = weatherStation.getHumidity();
+        display();
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Statistics: " + temperature + "F degrees and " + humidity + "% humidity");
+    }
+}
+
+
 @SuppressWarnings("unused")
 public class ObserverPattern {
     public static void main(String[] args) {
@@ -108,6 +137,7 @@ public class ObserverPattern {
         
         // Create and register observers
         CurrentConditionsDisplay currentDisplay = new CurrentConditionsDisplay(weatherStation);
+        StatisticsDisplay statisticsDisplay = new StatisticsDisplay(weatherStation);
         
         // Simulate weather changes
         System.out.println("Weather update 1:");
