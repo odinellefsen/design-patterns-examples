@@ -1,10 +1,10 @@
-@SuppressWarnings("unused")
 // Strategy interface
 interface PaymentStrategy {
     void pay(int amount);
 }
 
 // Concrete strategies
+@SuppressWarnings("unused")
 class CreditCardPayment implements PaymentStrategy {
     private String cardNumber;
     private String name;
@@ -24,6 +24,7 @@ class CreditCardPayment implements PaymentStrategy {
     }
 }
 
+@SuppressWarnings("unused")
 class PayPalPayment implements PaymentStrategy {
     private String email;
     private String password;
@@ -39,6 +40,7 @@ class PayPalPayment implements PaymentStrategy {
     }
 }
 
+@SuppressWarnings("unused")
 class BitcoinPayment implements PaymentStrategy {
     private String walletAddress;
     
@@ -66,7 +68,8 @@ class ShoppingCart {
 }
 
 // Main class to run the example
-public class StrategyPatternDemo {
+@SuppressWarnings("all") // This will suppress all warnings for this file
+public class StrategyPattern {
     public static void main(String[] args) {
         ShoppingCart cart = new ShoppingCart();
         
