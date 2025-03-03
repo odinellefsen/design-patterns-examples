@@ -82,7 +82,7 @@ class SugarDecorator extends BeverageDecorator {
     }
 }
 
-// Additional ConcreteDecorator examples
+// ConcreteDecoratorC - adds different behavior to the component
 class CaramelDecorator extends BeverageDecorator {
     public CaramelDecorator(Beverage beverage) {
         super(beverage);
@@ -99,6 +99,7 @@ class CaramelDecorator extends BeverageDecorator {
     }
 }
 
+// ConcreteDecoratorD - adds different behavior to the component
 class WhippedCreamDecorator extends BeverageDecorator {
     public WhippedCreamDecorator(Beverage beverage) {
         super(beverage);
