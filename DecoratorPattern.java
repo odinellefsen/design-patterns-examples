@@ -1,116 +1,140 @@
 // Component - the abstract base component interface
-abstract class Component {
-    public abstract void methodA();
-    public abstract void methodB();
+abstract class Beverage {
+    protected String description = "Unknown Beverage";
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public abstract double cost();
 }
 
 // ConcreteComponent - the basic implementation of the Component interface
-class ConcreteComponent extends Component {
-    @Override
-    public void methodA() {
-        System.out.println("ConcreteComponent.methodA()");
+class BasicCoffee extends Beverage {
+    public BasicCoffee() {
+        description = "Basic Coffee";
     }
     
     @Override
-    public void methodB() {
-        System.out.println("ConcreteComponent.methodB()");
+    public double cost() {
+        return 1.99;
     }
 }
 
 // Decorator - abstract decorator class that implements Component and has a reference to a Component
-abstract class Decorator extends Component {
-    protected Component wrappedObj; // Reference to the wrapped component
+abstract class BeverageDecorator extends Beverage {
+    protected Beverage wrappedObj; // Reference to the wrapped component
     
-    public Decorator(Component component) {
-        this.wrappedObj = component;
-    }
-    
-    // Default behavior is to delegate to the wrapped component
-    @Override
-    public void methodA() {
-        wrappedObj.methodA();
+    public BeverageDecorator(Beverage beverage) {
+        this.wrappedObj = beverage;
     }
     
     @Override
-    public void methodB() {
-        wrappedObj.methodB();
+    public String getDescription() {
+        return wrappedObj.getDescription();
     }
 }
 
 // ConcreteDecoratorA - adds behavior to the component
-class ConcreteDecoratorA extends Decorator {
-    public ConcreteDecoratorA(Component component) {
-        super(component);
+class MilkDecorator extends BeverageDecorator {
+    public MilkDecorator(Beverage beverage) {
+        super(beverage);
     }
     
     @Override
-    public void methodA() {
-        System.out.println("ConcreteDecoratorA: before methodA()");
-        super.methodA();
-        System.out.println("ConcreteDecoratorA: after methodA()");
+    public String getDescription() {
+        return wrappedObj.getDescription() + ", Milk";
     }
     
     @Override
-    public void methodB() {
-        System.out.println("ConcreteDecoratorA: before methodB()");
-        super.methodB();
-        System.out.println("ConcreteDecoratorA: after methodB()");
+    public double cost() {
+        return wrappedObj.cost() + 0.30;
     }
     
     // Additional behavior specific to this decorator
-    public void newBehavior() {
-        System.out.println("ConcreteDecoratorA: new behavior");
+    public void frothMilk() {
+        System.out.println("Frothing milk...");
     }
 }
 
 // ConcreteDecoratorB - adds different behavior to the component
-class ConcreteDecoratorB extends Decorator {
+class SugarDecorator extends BeverageDecorator {
     // Additional state
-    private String state = "Decorator B State";
+    private int sugarLevel = 2; // Default sugar level
     
-    public ConcreteDecoratorB(Component component) {
-        super(component);
+    public SugarDecorator(Beverage beverage) {
+        super(beverage);
+    }
+    
+    public SugarDecorator(Beverage beverage, int sugarLevel) {
+        super(beverage);
+        this.sugarLevel = sugarLevel;
     }
     
     @Override
-    public void methodA() {
-        System.out.println("ConcreteDecoratorB: before methodA() with " + state);
-        super.methodA();
-        System.out.println("ConcreteDecoratorB: after methodA()");
+    public String getDescription() {
+        return wrappedObj.getDescription() + ", Sugar (level: " + sugarLevel + ")";
     }
     
     @Override
-    public void methodB() {
-        System.out.println("ConcreteDecoratorB: adding extra behavior to methodB()");
-        super.methodB();
+    public double cost() {
+        return wrappedObj.cost() + 0.10;
+    }
+}
+
+// Additional ConcreteDecorator examples
+class CaramelDecorator extends BeverageDecorator {
+    public CaramelDecorator(Beverage beverage) {
+        super(beverage);
+    }
+    
+    @Override
+    public String getDescription() {
+        return wrappedObj.getDescription() + ", Caramel";
+    }
+    
+    @Override
+    public double cost() {
+        return wrappedObj.cost() + 0.50;
+    }
+}
+
+class WhippedCreamDecorator extends BeverageDecorator {
+    public WhippedCreamDecorator(Beverage beverage) {
+        super(beverage);
+    }
+    
+    @Override
+    public String getDescription() {
+        return wrappedObj.getDescription() + ", Whipped Cream";
+    }
+    
+    @Override
+    public double cost() {
+        return wrappedObj.cost() + 0.70;
     }
 }
 
 @SuppressWarnings("all")
 public class DecoratorPattern {
     public static void main(String[] args) {
-        // Create a basic concrete component
-        Component component = new ConcreteComponent();
-        System.out.println("Basic component:");
-        component.methodA();
-        component.methodB();
+        // Create a basic coffee
+        Beverage simpleCoffee = new BasicCoffee();
+        System.out.println(simpleCoffee.getDescription() + " $" + simpleCoffee.cost());
         
-        // Decorate with ConcreteDecoratorA
-        System.out.println("\nComponent with Decorator A:");
-        Component decoratorA = new ConcreteDecoratorA(component);
-        decoratorA.methodA();
-        decoratorA.methodB();
+        // Add milk to our coffee
+        Beverage milkCoffee = new MilkDecorator(simpleCoffee);
+        System.out.println(milkCoffee.getDescription() + " $" + milkCoffee.cost());
         
-        // Decorate with ConcreteDecoratorB
-        System.out.println("\nComponent with Decorator B:");
-        Component decoratorB = new ConcreteDecoratorB(component);
-        decoratorB.methodA();
-        decoratorB.methodB();
+        // Add sugar to our coffee
+        Beverage sugarCoffee = new SugarDecorator(simpleCoffee);
+        System.out.println(sugarCoffee.getDescription() + " $" + sugarCoffee.cost());
         
-        // Stack decorators - first A, then B
-        System.out.println("\nComponent with Decorator A and B stacked:");
-        Component decoratorAB = new ConcreteDecoratorB(new ConcreteDecoratorA(component));
-        decoratorAB.methodA();
-        decoratorAB.methodB();
+        // Create a complex coffee with multiple decorators
+        Beverage fancyCoffee = new WhippedCreamDecorator(
+                                new CaramelDecorator(
+                                    new MilkDecorator(
+                                        new BasicCoffee())));
+        System.out.println(fancyCoffee.getDescription() + " $" + fancyCoffee.cost());
     }
 }
