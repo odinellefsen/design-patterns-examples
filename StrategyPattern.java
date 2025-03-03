@@ -3,7 +3,7 @@ interface PaymentStrategy {
     void pay(int amount);
 }
 
-// Concrete strategies
+// Concrete strategy 1
 @SuppressWarnings("unused")
 class CreditCardPayment implements PaymentStrategy {
     private String cardNumber;
@@ -24,6 +24,7 @@ class CreditCardPayment implements PaymentStrategy {
     }
 }
 
+// Concrete strategy 2
 @SuppressWarnings("unused")
 class PayPalPayment implements PaymentStrategy {
     private String email;
@@ -40,6 +41,7 @@ class PayPalPayment implements PaymentStrategy {
     }
 }
 
+// Concrete strategy 3
 @SuppressWarnings("unused")
 class BitcoinPayment implements PaymentStrategy {
     private String walletAddress;
@@ -54,7 +56,7 @@ class BitcoinPayment implements PaymentStrategy {
     }
 }
 
-// Context class
+// Context class. This is the class that will use the strategy pattern.
 class ShoppingCart {
     private PaymentStrategy paymentStrategy;
     
