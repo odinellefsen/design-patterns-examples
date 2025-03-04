@@ -117,7 +117,7 @@ class WhippedCreamDecorator extends BeverageDecorator {
 }
 
 @SuppressWarnings("all")
-public class DecoratorPattern {
+public class Decorator {
     public static void main(String[] args) {
         // Create a basic coffee
         Beverage simpleCoffee = new BasicCoffee();

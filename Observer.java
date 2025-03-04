@@ -128,7 +128,6 @@ class StatisticsDisplay implements ObserverInterface, DisplayElement {
     }
 }
 
-
 @SuppressWarnings("unused")
 public class Observer {
     public static void main(String[] args) {
