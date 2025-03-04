@@ -1,55 +1,3 @@
-@SuppressWarnings("all")
-public class Iterator {
-    public static void main(String[] args) {
-        // Create a book collection
-        BookCollection bookCollection = new BookCollection();
-        bookCollection.addBook(new Book("Design Patterns", "Gamma, Helm, Johnson, Vlissides"));
-        bookCollection.addBook(new Book("Clean Code", "Robert C. Martin"));
-        bookCollection.addBook(new Book("Refactoring", "Martin Fowler"));
-        bookCollection.addBook(new Book("Head First Design Patterns", "Eric Freeman, Elisabeth Robson"));
-        
-        // Get the iterator from the collection
-        BookIterator iterator = bookCollection.createIterator();
-        
-        // Use the iterator to go through the collection
-        System.out.println("Iterating through the book collection:");
-        while (iterator.hasNext()) {
-            Book book = iterator.next();
-            System.out.println(" - " + book.getTitle() + " by " + book.getAuthor());
-        }
-        
-        // Reset and use the iterator again
-        iterator = bookCollection.createIterator();
-        System.out.println("\nLooking for a specific book:");
-        while (iterator.hasNext()) {
-            Book book = iterator.next();
-            if (book.getTitle().contains("Clean")) {
-                System.out.println("Found: " + book.getTitle());
-                break;
-            }
-        }
-        
-        // Demonstrate removing an element
-        iterator = bookCollection.createIterator();
-        System.out.println("\nRemoving 'Refactoring' from the collection:");
-        while (iterator.hasNext()) {
-            Book book = iterator.next();
-            if (book.getTitle().equals("Refactoring")) {
-                iterator.remove();
-                System.out.println("Removed: " + book.getTitle());
-            }
-        }
-        
-        // Verify the book was removed
-        iterator = bookCollection.createIterator();
-        System.out.println("\nRemaining books:");
-        while (iterator.hasNext()) {
-            Book book = iterator.next();
-            System.out.println(" - " + book.getTitle());
-        }
-    }
-}
-
 // A simple Book class for our collection
 class Book {
     private String title;
@@ -149,5 +97,57 @@ class BookCollectionIterator implements BookIterator {
         currentIndex--;
         bookCollection.removeBook(bookCollection.getBook(currentIndex));
         removable = false;
+    }
+}
+
+@SuppressWarnings("all")
+public class Iterator {
+    public static void main(String[] args) {
+        // Create a book collection
+        BookCollection bookCollection = new BookCollection();
+        bookCollection.addBook(new Book("Design Patterns", "Gamma, Helm, Johnson, Vlissides"));
+        bookCollection.addBook(new Book("Clean Code", "Robert C. Martin"));
+        bookCollection.addBook(new Book("Refactoring", "Martin Fowler"));
+        bookCollection.addBook(new Book("Head First Design Patterns", "Eric Freeman, Elisabeth Robson"));
+        
+        // Get the iterator from the collection
+        BookIterator iterator = bookCollection.createIterator();
+        
+        // Use the iterator to go through the collection
+        System.out.println("Iterating through the book collection:");
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            System.out.println(" - " + book.getTitle() + " by " + book.getAuthor());
+        }
+        
+        // Reset and use the iterator again
+        iterator = bookCollection.createIterator();
+        System.out.println("\nLooking for a specific book:");
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getTitle().contains("Clean")) {
+                System.out.println("Found: " + book.getTitle());
+                break;
+            }
+        }
+        
+        // Demonstrate removing an element
+        iterator = bookCollection.createIterator();
+        System.out.println("\nRemoving 'Refactoring' from the collection:");
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getTitle().equals("Refactoring")) {
+                iterator.remove();
+                System.out.println("Removed: " + book.getTitle());
+            }
+        }
+        
+        // Verify the book was removed
+        iterator = bookCollection.createIterator();
+        System.out.println("\nRemaining books:");
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            System.out.println(" - " + book.getTitle());
+        }
     }
 }
