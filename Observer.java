@@ -1,14 +1,14 @@
 // this is a pull based observer pattern. this means that the observer is responsible for pulling the data from the subject.
 // if you used a push based observer pattern, the subject would push the data to the observer via the update method.
 // Observer interface - now with no parameters for update
-interface Observer {
+interface ObserverInterface {
     void update();
 }
 
 // Subject interface remains the same
 interface Subject {
-    void registerObserver(Observer o);
-    void removeObserver(Observer o);
+    void registerObserver(ObserverInterface o);
+    void removeObserver(ObserverInterface o);
     void notifyObservers();
 }
 
@@ -23,25 +23,25 @@ class WeatherStation implements Subject {
     private float temperature;
     private float humidity;
     private float pressure;
-    private java.util.ArrayList<Observer> observers;
+    private java.util.ArrayList<ObserverInterface> observers;
     
     public WeatherStation() {
         observers = new java.util.ArrayList<>();
     }
     
     @Override
-    public void registerObserver(Observer o) {
+    public void registerObserver(ObserverInterface o) {
         observers.add(o);
     }
     
     @Override
-    public void removeObserver(Observer o) {
+    public void removeObserver(ObserverInterface o) {
         observers.remove(o);
     }
     
     @Override
     public void notifyObservers() {
-        for (Observer observer : observers) {
+        for (ObserverInterface observer : observers) {
             observer.update();
         }
     }
@@ -75,7 +75,7 @@ class WeatherStation implements Subject {
 
 // ConcreteObserver 1 - holds a reference to the ConcreteSubject (WeatherStation)
 // and pulls data when updated
-class CurrentConditionsDisplay implements Observer, DisplayElement {
+class CurrentConditionsDisplay implements ObserverInterface, DisplayElement {
     private float temperature;
     private float humidity;
     private WeatherStation weatherStation;
@@ -103,7 +103,7 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
 // ConcreteObserver 2 - holds a reference to the ConcreteSubject (WeatherStation)
 // and pulls data when updated
 @SuppressWarnings("unused")
-class StatisticsDisplay implements Observer, DisplayElement {
+class StatisticsDisplay implements ObserverInterface, DisplayElement {
     private float temperature;
     private float humidity;
     private float pressure;
@@ -130,7 +130,7 @@ class StatisticsDisplay implements Observer, DisplayElement {
 
 
 @SuppressWarnings("unused")
-public class ObserverPattern {
+public class Observer {
     public static void main(String[] args) {
         // Create subject
         WeatherStation weatherStation = new WeatherStation();
