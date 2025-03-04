@@ -1,24 +1,3 @@
-@SuppressWarnings("all")
-public class Facade {
-    public static void main(String[] args) {
-        // Client code using the facade
-        HomeTheaterFacade homeTheater = new HomeTheaterFacade(
-            new Amplifier(), 
-            new DvdPlayer(),
-            new Projector(),
-            new TheaterLights(),
-            new Screen(),
-            new PopcornMaker()
-        );
-        
-        System.out.println("--- Movie Night Starting ---");
-        homeTheater.watchMovie("The Matrix");
-        
-        System.out.println("\n--- Movie Night Ending ---");
-        homeTheater.endMovie();
-    }
-}
-
 // Facade from the class diagram
 class HomeTheaterFacade {
     private Amplifier amplifier;
@@ -169,5 +148,26 @@ class PopcornMaker {
     
     public void pop() {
         System.out.println("Popcorn Maker is popping popcorn!");
+    }
+}
+
+@SuppressWarnings("all")
+public class Facade {
+    public static void main(String[] args) {
+        // Client code using the facade
+        HomeTheaterFacade homeTheater = new HomeTheaterFacade(
+            new Amplifier(), 
+            new DvdPlayer(),
+            new Projector(),
+            new TheaterLights(),
+            new Screen(),
+            new PopcornMaker()
+        );
+        
+        System.out.println("--- Movie Night Starting ---");
+        homeTheater.watchMovie("The Matrix");
+        
+        System.out.println("\n--- Movie Night Ending ---");
+        homeTheater.endMovie();
     }
 }
