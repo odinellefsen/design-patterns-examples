@@ -1,26 +1,3 @@
-@SuppressWarnings("all")
-public class AbstractFactory {
-    public static void main(String[] args) {
-        // Create a modern UI factory
-        UIFactory modernFactory = new ModernUIFactory();
-        
-        // Create a client with the modern factory
-        Client client1 = new Client(modernFactory);
-        client1.createUI();
-        client1.renderUI();
-        
-        System.out.println("\n------------------------\n");
-        
-        // Create a vintage UI factory
-        UIFactory vintageFactory = new VintageUIFactory();
-        
-        // Create a client with the vintage factory
-        Client client2 = new Client(vintageFactory);
-        client2.createUI();
-        client2.renderUI();
-    }
-}
-
 // Client from the class diagram
 class Client {
     private Button button;
@@ -113,5 +90,28 @@ class VintageCheckbox implements Checkbox {
     @Override
     public void render() {
         System.out.println("Rendering a traditional square checkbox with a thick border");
+    }
+}
+
+@SuppressWarnings("all")
+public class AbstractFactory {
+    public static void main(String[] args) {
+        // Create a modern UI factory
+        UIFactory modernFactory = new ModernUIFactory();
+        
+        // Create a client with the modern factory
+        Client client1 = new Client(modernFactory);
+        client1.createUI();
+        client1.renderUI();
+        
+        System.out.println("\n------------------------\n");
+        
+        // Create a vintage UI factory
+        UIFactory vintageFactory = new VintageUIFactory();
+        
+        // Create a client with the vintage factory
+        Client client2 = new Client(vintageFactory);
+        client2.createUI();
+        client2.renderUI();
     }
 }

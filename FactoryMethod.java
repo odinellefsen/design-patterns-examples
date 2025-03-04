@@ -1,34 +1,3 @@
-@SuppressWarnings("all")
-public class FactoryMethod {
-    public static void main(String[] args) {
-        // Create different types of logistics
-        LogisticsCreator roadLogistics = new RoadLogistics();
-        LogisticsCreator seaLogistics = new SeaLogistics();
-        LogisticsCreator airLogistics = new AirLogistics();
-        
-        // Use the factory method to create transport objects
-        Transport truck = roadLogistics.createTransport();
-        Transport ship = seaLogistics.createTransport();
-        Transport airplane = airLogistics.createTransport();
-        
-        // Deliver using different transport types
-        System.out.println("Road delivery:");
-        truck.deliver();
-        
-        System.out.println("\nSea delivery:");
-        ship.deliver();
-        
-        System.out.println("\nAir delivery:");
-        airplane.deliver();
-        
-        // Demonstrate the operation method in the creator
-        System.out.println("\nPlanning logistics:");
-        roadLogistics.planDelivery();
-        seaLogistics.planDelivery();
-        airLogistics.planDelivery();
-    }
-}
-
 // Creator from the class diagram
 abstract class LogisticsCreator {
     // Factory method
@@ -95,5 +64,36 @@ class Airplane implements Transport {
     @Override
     public void deliver() {
         System.out.println("Delivering by air in an airplane");
+    }
+}
+
+@SuppressWarnings("all")
+public class FactoryMethod {
+    public static void main(String[] args) {
+        // Create different types of logistics
+        LogisticsCreator roadLogistics = new RoadLogistics();
+        LogisticsCreator seaLogistics = new SeaLogistics();
+        LogisticsCreator airLogistics = new AirLogistics();
+        
+        // Use the factory method to create transport objects
+        Transport truck = roadLogistics.createTransport();
+        Transport ship = seaLogistics.createTransport();
+        Transport airplane = airLogistics.createTransport();
+        
+        // Deliver using different transport types
+        System.out.println("Road delivery:");
+        truck.deliver();
+        
+        System.out.println("\nSea delivery:");
+        ship.deliver();
+        
+        System.out.println("\nAir delivery:");
+        airplane.deliver();
+        
+        // Demonstrate the operation method in the creator
+        System.out.println("\nPlanning logistics:");
+        roadLogistics.planDelivery();
+        seaLogistics.planDelivery();
+        airLogistics.planDelivery();
     }
 }
