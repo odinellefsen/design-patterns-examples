@@ -71,7 +71,7 @@ class ShoppingCart {
 
 // Main class to run the example
 @SuppressWarnings("all") // This will suppress all warnings for this file
-public class StrategyPattern {
+public class Strategy {
     public static void main(String[] args) {
         ShoppingCart cart = new ShoppingCart();
         
