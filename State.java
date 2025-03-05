@@ -1,43 +1,3 @@
-@SuppressWarnings("all")
-public class State {
-    public static void main(String[] args) {
-        // Create a vending machine
-        VendingMachine vendingMachine = new VendingMachine(5);
-        
-        // Test the vending machine in different states
-        System.out.println("Initial state: " + vendingMachine.getCurrentStateName());
-        
-        // Insert coins
-        vendingMachine.insertCoin();
-        vendingMachine.insertCoin();
-        
-        // Select product
-        vendingMachine.selectProduct();
-        
-        // Dispense product
-        vendingMachine.dispenseProduct();
-        
-        // Try to select without inserting coins
-        vendingMachine.selectProduct();
-        
-        // Insert coins again
-        vendingMachine.insertCoin();
-        vendingMachine.insertCoin();
-        
-        // Select and dispense
-        vendingMachine.selectProduct();
-        vendingMachine.dispenseProduct();
-        
-        // Check if machine is out of stock
-        System.out.println("\nProducts left: " + vendingMachine.getProductCount());
-        
-        // Refill the machine
-        vendingMachine.refill(3);
-        System.out.println("After refill - Products left: " + vendingMachine.getProductCount());
-        System.out.println("Current state: " + vendingMachine.getCurrentStateName());
-    }
-}
-
 // Context from the class diagram
 class VendingMachine {
     // States
@@ -275,5 +235,45 @@ class SoldOutState implements MachineState {
     @Override
     public void dispense() {
         System.out.println("No product to dispense");
+    }
+}
+
+@SuppressWarnings("all")
+public class State {
+    public static void main(String[] args) {
+        // Create a vending machine
+        VendingMachine vendingMachine = new VendingMachine(5);
+        
+        // Test the vending machine in different states
+        System.out.println("Initial state: " + vendingMachine.getCurrentStateName());
+        
+        // Insert coins
+        vendingMachine.insertCoin();
+        vendingMachine.insertCoin();
+        
+        // Select product
+        vendingMachine.selectProduct();
+        
+        // Dispense product
+        vendingMachine.dispenseProduct();
+        
+        // Try to select without inserting coins
+        vendingMachine.selectProduct();
+        
+        // Insert coins again
+        vendingMachine.insertCoin();
+        vendingMachine.insertCoin();
+        
+        // Select and dispense
+        vendingMachine.selectProduct();
+        vendingMachine.dispenseProduct();
+        
+        // Check if machine is out of stock
+        System.out.println("\nProducts left: " + vendingMachine.getProductCount());
+        
+        // Refill the machine
+        vendingMachine.refill(3);
+        System.out.println("After refill - Products left: " + vendingMachine.getProductCount());
+        System.out.println("Current state: " + vendingMachine.getCurrentStateName());
     }
 }

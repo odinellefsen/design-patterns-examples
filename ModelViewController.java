@@ -1,36 +1,3 @@
-public class ModelViewController {
-    public static void main(String[] args) {
-        // Create the model
-        StudentModel model = new StudentModel();
-        model.setName("John Doe");
-        model.setRollNo("CS21001");
-        model.setGrade("A");
-        
-        // Create the view
-        StudentView view = new StudentView();
-        
-        // Create the controller
-        StudentController controller = new StudentController(model, view);
-        
-        // Display the initial student details
-        System.out.println("Initial Student Details:");
-        controller.updateView();
-        
-        // Update the model data through the controller
-        System.out.println("\nAfter updating student details:");
-        controller.setStudentName("Jane Smith");
-        controller.setStudentGrade("A+");
-        
-        // Display the updated student details
-        controller.updateView();
-        
-        // Simulate user input changing the roll number
-        System.out.println("\nAfter user input to change roll number:");
-        controller.processUserInput("CS21002", "roll");
-        controller.updateView();
-    }
-}
-
 // Model - Represents the data and business logic
 class StudentModel {
     private String rollNo;
@@ -153,5 +120,38 @@ class StudentController {
     // Business logic in the controller
     private boolean isValidGrade(String grade) {
         return grade.matches("[A-F][+\\-]?");
+    }
+}
+
+public class ModelViewController {
+    public static void main(String[] args) {
+        // Create the model
+        StudentModel model = new StudentModel();
+        model.setName("John Doe");
+        model.setRollNo("CS21001");
+        model.setGrade("A");
+        
+        // Create the view
+        StudentView view = new StudentView();
+        
+        // Create the controller
+        StudentController controller = new StudentController(model, view);
+        
+        // Display the initial student details
+        System.out.println("Initial Student Details:");
+        controller.updateView();
+        
+        // Update the model data through the controller
+        System.out.println("\nAfter updating student details:");
+        controller.setStudentName("Jane Smith");
+        controller.setStudentGrade("A+");
+        
+        // Display the updated student details
+        controller.updateView();
+        
+        // Simulate user input changing the roll number
+        System.out.println("\nAfter user input to change roll number:");
+        controller.processUserInput("CS21002", "roll");
+        controller.updateView();
     }
 }

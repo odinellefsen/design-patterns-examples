@@ -1,40 +1,3 @@
-@SuppressWarnings("all")
-public class Builder {
-    public static void main(String[] args) {
-        // Create a meal builder
-        MealDirector director = new MealDirector();
-        
-        // Build a vegetarian meal
-        MealBuilder vegetarianBuilder = new VegetarianMealBuilder();
-        director.constructMeal(vegetarianBuilder);
-        Meal vegetarianMeal = vegetarianBuilder.getResult();
-        System.out.println("Vegetarian Meal:");
-        System.out.println(vegetarianMeal);
-        
-        // Build a non-vegetarian meal
-        MealBuilder nonVegBuilder = new NonVegetarianMealBuilder();
-        director.constructMeal(nonVegBuilder);
-        Meal nonVegMeal = nonVegBuilder.getResult();
-        System.out.println("\nNon-Vegetarian Meal:");
-        System.out.println(nonVegMeal);
-        
-        // Build a kids meal
-        MealBuilder kidsBuilder = new KidsMealBuilder();
-        director.constructMeal(kidsBuilder);
-        Meal kidsMeal = kidsBuilder.getResult();
-        System.out.println("\nKids Meal:");
-        System.out.println(kidsMeal);
-        
-        // Using the builder directly without a director
-        System.out.println("\nCustom Meal (without director):");
-        Meal customMeal = new VegetarianMealBuilder()
-            .buildMainCourse()
-            .buildDessert()
-            .getResult();
-        System.out.println(customMeal);
-    }
-}
-
 // Product from the class diagram
 class Meal {
     private String mainCourse;
@@ -210,5 +173,42 @@ class MealDirector {
                .buildSide()
                .buildDrink()
                .buildDessert();
+    }
+}
+
+@SuppressWarnings("all")
+public class Builder {
+    public static void main(String[] args) {
+        // Create a meal builder
+        MealDirector director = new MealDirector();
+        
+        // Build a vegetarian meal
+        MealBuilder vegetarianBuilder = new VegetarianMealBuilder();
+        director.constructMeal(vegetarianBuilder);
+        Meal vegetarianMeal = vegetarianBuilder.getResult();
+        System.out.println("Vegetarian Meal:");
+        System.out.println(vegetarianMeal);
+        
+        // Build a non-vegetarian meal
+        MealBuilder nonVegBuilder = new NonVegetarianMealBuilder();
+        director.constructMeal(nonVegBuilder);
+        Meal nonVegMeal = nonVegBuilder.getResult();
+        System.out.println("\nNon-Vegetarian Meal:");
+        System.out.println(nonVegMeal);
+        
+        // Build a kids meal
+        MealBuilder kidsBuilder = new KidsMealBuilder();
+        director.constructMeal(kidsBuilder);
+        Meal kidsMeal = kidsBuilder.getResult();
+        System.out.println("\nKids Meal:");
+        System.out.println(kidsMeal);
+        
+        // Using the builder directly without a director
+        System.out.println("\nCustom Meal (without director):");
+        Meal customMeal = new VegetarianMealBuilder()
+            .buildMainCourse()
+            .buildDessert()
+            .getResult();
+        System.out.println(customMeal);
     }
 }
