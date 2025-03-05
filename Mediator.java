@@ -1,38 +1,3 @@
-@SuppressWarnings("all")
-public class Mediator {
-    public static void main(String[] args) {
-        // Create the mediator
-        ChatRoom chatRoom = new ChatRoom();
-        
-        // Create colleagues
-        User john = new UserImpl(chatRoom, "John");
-        User alice = new UserImpl(chatRoom, "Alice");
-        User bob = new UserImpl(chatRoom, "Bob");
-        
-        // Register colleagues with the mediator
-        chatRoom.registerUser(john);
-        chatRoom.registerUser(alice);
-        chatRoom.registerUser(bob);
-        
-        // Colleagues interact through the mediator
-        john.send("Hello everyone!");
-        
-        alice.send("Hi John, how are you?");
-        
-        bob.send("Hey folks, what are we discussing today?");
-        
-        // Direct message
-        john.sendPrivate("Alice", "Can we meet later?");
-        
-        // Create a different type of colleague
-        AdminUser admin = new AdminUser(chatRoom, "Admin");
-        chatRoom.registerUser(admin);
-        
-        // Admin broadcasts an announcement
-        admin.sendAnnouncement("The system will be down for maintenance tonight.");
-    }
-}
-
 // Mediator interface from the class diagram
 interface ChatMediator {
     void sendMessage(String message, User user);
@@ -161,5 +126,40 @@ class AdminUser extends User {
         if (mediator instanceof ChatRoom) {
             ((ChatRoom) mediator).sendAnnouncement(message, name);
         }
+    }
+}
+
+@SuppressWarnings("all")
+public class Mediator {
+    public static void main(String[] args) {
+        // Create the mediator
+        ChatRoom chatRoom = new ChatRoom();
+        
+        // Create colleagues
+        User john = new UserImpl(chatRoom, "John");
+        User alice = new UserImpl(chatRoom, "Alice");
+        User bob = new UserImpl(chatRoom, "Bob");
+        
+        // Register colleagues with the mediator
+        chatRoom.registerUser(john);
+        chatRoom.registerUser(alice);
+        chatRoom.registerUser(bob);
+        
+        // Colleagues interact through the mediator
+        john.send("Hello everyone!");
+        
+        alice.send("Hi John, how are you?");
+        
+        bob.send("Hey folks, what are we discussing today?");
+        
+        // Direct message
+        john.sendPrivate("Alice", "Can we meet later?");
+        
+        // Create a different type of colleague
+        AdminUser admin = new AdminUser(chatRoom, "Admin");
+        chatRoom.registerUser(admin);
+        
+        // Admin broadcasts an announcement
+        admin.sendAnnouncement("The system will be down for maintenance tonight.");
     }
 }
