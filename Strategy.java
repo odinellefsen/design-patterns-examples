@@ -1,11 +1,11 @@
 // Strategy interface
-interface PaymentStrategy {
-    void pay(int amount);
+abstract class PaymentStrategy {
+    abstract void pay(int amount);
 }
 
 // Concrete strategy 1
 @SuppressWarnings("unused")
-class CreditCardPayment implements PaymentStrategy {
+class CreditCardPayment extends PaymentStrategy {
     private String cardNumber;
     private String name;
     private String cvv;
@@ -26,7 +26,7 @@ class CreditCardPayment implements PaymentStrategy {
 
 // Concrete strategy 2
 @SuppressWarnings("unused")
-class PayPalPayment implements PaymentStrategy {
+class PayPalPayment extends PaymentStrategy {
     private String email;
     private String password;
     
@@ -43,7 +43,7 @@ class PayPalPayment implements PaymentStrategy {
 
 // Concrete strategy 3
 @SuppressWarnings("unused")
-class BitcoinPayment implements PaymentStrategy {
+class BitcoinPayment extends PaymentStrategy {
     private String walletAddress;
     
     public BitcoinPayment(String walletAddress) {
