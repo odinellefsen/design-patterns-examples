@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Define the client interface
-interface WebServiceClient {
-    String get(String url);
+abstract class WebServiceClient {
+    abstract String get(String url);
 }
 
 // The core implementation of the web service client
-class BasicWebServiceClient implements WebServiceClient {
+class BasicWebServiceClient extends WebServiceClient {
     @Override
     public String get(String url) {
         // Simulate an HTTP GET request and return a dummy response.
@@ -18,7 +18,7 @@ class BasicWebServiceClient implements WebServiceClient {
 }
 
 // The abstract decorator that implements WebServiceClient and holds a reference to a wrapped client.
-abstract class WebServiceClientDecorator implements WebServiceClient {
+abstract class WebServiceClientDecorator extends WebServiceClient {
     protected WebServiceClient client;
     
     public WebServiceClientDecorator(WebServiceClient client) {
